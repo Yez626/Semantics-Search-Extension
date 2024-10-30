@@ -1,0 +1,16 @@
+#content {
+    padding: 10px;
+    width: 200px;
+  }
+  #keyword {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  #searchBtn {
+    width: 100%;
+  }
+  #result {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
