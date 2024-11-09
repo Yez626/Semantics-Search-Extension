@@ -15,6 +15,11 @@ document.getElementById('getContentBtn').addEventListener('click', () => {
 
 document.getElementById('searchBtn').addEventListener('click', () => {
   const keyword = document.getElementById('keyword').value.trim();
+  const actionToggle = document.getElementById("actionToggle");
+
+  if(actionToggle.checked){
+    return;
+  }
   
   if (keyword) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {

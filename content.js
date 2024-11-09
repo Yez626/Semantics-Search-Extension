@@ -9,7 +9,7 @@ function removeHighlights() {
   }
   
   // Highlight all occurrences of the keyword
-  function highlightKeyword(keyword) {
+function highlightKeyword(keyword) {
     removeHighlights(); // Remove old highlights if present
     if (!keyword) return;
   
@@ -59,6 +59,10 @@ function removeHighlights() {
       sendResponse({ count: matches ? matches.length : 0 });
     } else if (request.type === "clearHighlights") {
       removeHighlights();
+      sendResponse({ success: true });
+    } else if (request.type === "highlightContent") {
+      // Directly highlight the specified content
+      highlightKeyword(request.keyword);
       sendResponse({ success: true });
     }
   });
