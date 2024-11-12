@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Highlight Keyword Test</title>
+    <style>
+        .highlighted-keyword {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <span style="font-family: Arial;">Hello</span>
+        <span style="font-family: Times New Roman;"> world</span>,
+        this is a <em>test</em> of the <strong>highlight</strong> function.
+    </p>
+
+    <!-- Include your JavaScript code here -->
+    <script>
+        // Paste the highlightKeyword and removeHighlights functions here
+
+        function highlightKeyword(keyword) {
+            removeHighlights(); // Remove old highlights if present
+            if (!keyword) return;
+
+            // Escape special characters in the keyword
+            const escapedKeyword = keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            const regex = new RegExp(escapedKeyword, 'gi');
+
+            // Get all text nodes in the document
+            const textNodes = [];
+            const walker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+
+            // Combine all text nodes into one string
+            const fullText = textNodes.map(node => node.nodeValue).join('');
+            let match;
+            let lastIndex = 0;
+
+            // Find all matches
+            while ((match = regex.exec(fullText)) !== null) {
+                const matchStart = match.index;
+                const matchEnd = regex.lastIndex;
+
+                let currentIndex = 0;
+                let startNode, endNode;
+                let startOffset, endOffset;
+
+                // Find start and end nodes for the match
+                for (let i = 0; i < textNodes.length; i++) {
+                    const textNode = textNodes[i];
+                    const nodeTextLength = textNode.nodeValue.length;
+
+                    if (!startNode && currentIndex + nodeTextLength > matchStart) {
+                        startNode = textNode;
+                        startOffset = matchStart - currentIndex;
+                    }
+
+                    if (currentIndex + nodeTextLength >= matchEnd) {
+                        endNode = textNode;
+                        endOffset = matchEnd - currentIndex;
+                        break;
+                    }
+
+                    currentIndex += nodeTextLength;
+                }
+
+                // Create a range and surround it with a span
+                const range = document.createRange();
+                range.setStart(startNode, startOffset);
+                range.setEnd(endNode, endOffset);
+
+                const highlightSpan = document.createElement('span');
+                highlightSpan.className = 'highlighted-keyword';
+
+                range.surroundContents(highlightSpan);
+
+                // Adjust the indices due to DOM changes
+                regex.lastIndex = matchEnd;
+            }
+        }
+
+        function removeHighlights() {
+            document.querySelectorAll('.highlighted-keyword').forEach((highlight) => {
+                const parent = highlight.parentNode;
+                while (highlight.firstChild) {
+                    parent.insertBefore(highlight.firstChild, highlight);
+                }
+                parent.removeChild(highlight);
+                parent.normalize(); // Merge text nodes, if needed
+            });
+        }
+
+        // Call the function with the keyword to highlight
+        highlightKeyword('Hello world');
+    </script>
+</body>
+</html>

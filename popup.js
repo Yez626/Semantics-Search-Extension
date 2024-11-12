@@ -40,14 +40,16 @@ document.getElementById('searchBtn').addEventListener('click', () => {
 
 document.getElementById('nextBtn').addEventListener('click', () => {
   if (totalHighlights > 0) {
-    currentIndex = (currentIndex + 1) % totalHighlights;
+    //currentIndex = (currentIndex + 1) % totalHighlights;
+    currentIndex = currentIndex + 1
     navigateToHighlight(currentIndex);
   }
 });
 
 document.getElementById('prevBtn').addEventListener('click', () => {
   if (totalHighlights > 0) {
-    currentIndex = (currentIndex - 1 + totalHighlights) % totalHighlights;
+    //currentIndex = (currentIndex - 1 + totalHighlights) % totalHighlights;
+    currentIndex = currentIndex - 1;
     navigateToHighlight(currentIndex);
   }
 });
@@ -66,6 +68,7 @@ function navigateToHighlight(index) {
 
 function highlightAndScroll(index) {
   const highlights = document.querySelectorAll('.highlighted-keyword');
+  index = index % highlights.length
   if (highlights.length > 0 && highlights[index]) {
     highlights[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
     highlights.forEach((highlight, i) => {

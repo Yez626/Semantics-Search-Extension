@@ -1,50 +1,26 @@
-// Remove any existing highlights
-function removeHighlights() {
-    const highlights = document.querySelectorAll('.highlighted-keyword');
-    highlights.forEach((highlight) => {
-      const parent = highlight.parentNode;
-      parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
-      parent.normalize();
-    });
-  }
-  
-  // Highlight all occurrences of the keyword
+import Mark from 'mark.js';
+
 function highlightKeyword(keyword) {
-    removeHighlights(); // Remove old highlights if present
-    if (!keyword) return;
-  
-    const regex = new RegExp(`(${keyword})`, 'gi');
-  
-    function highlightTextNodes(node) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const matches = node.nodeValue.match(regex);
-        if (matches) {
-          const span = document.createElement('span');
-          span.className = 'highlighted-keyword';
-          span.style.backgroundColor = 'yellow';
-          span.textContent = matches[0];
-          const parts = node.nodeValue.split(regex);
-          const fragment = document.createDocumentFragment();
-          parts.forEach((part) => {
-            if (regex.test(part)) {
-              const highlightedSpan = document.createElement('span');
-              highlightedSpan.className = 'highlighted-keyword';
-              highlightedSpan.style.backgroundColor = 'yellow';
-              highlightedSpan.textContent = part;
-              fragment.appendChild(highlightedSpan);
-            } else {
-              fragment.appendChild(document.createTextNode(part));
-            }
-          });
-          node.replaceWith(fragment);
-        }
-      } else if (node.nodeType === Node.ELEMENT_NODE && node.childNodes.length) {
-        node.childNodes.forEach((child) => highlightTextNodes(child));
-      }
+  removeHighlights(); // Custom function to clear previous highlights
+  if (!keyword) return;
+
+  var instance = new Mark(document.body);
+
+  instance.mark(keyword, {
+    className: 'highlighted-keyword',
+    acrossElements: true,
+    separateWordSearch: false,
+    exclude: ['script', 'style'],
+    done: () => {
+      console.log('Highlighting complete');
     }
-  
-    highlightTextNodes(document.body);
-  }
+  });
+}
+
+function removeHighlights() {
+  var instance = new Mark(document.body);
+  instance.unmark();
+}
   
   // Listen for messages from the popup script
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
