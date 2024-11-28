@@ -1,5 +1,7 @@
 let currentIndex = -1;
 let totalHighlights = 0;
+let index_cnt = 0;
+let total_cnt = 0;
 
 // document.getElementById('getContentBtn').addEventListener('click', () => {
 //   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -42,7 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           chrome.tabs.sendMessage(tabs[0].id, { type: "searchKeyword", keyword: keyword }, (response) => {
             if (response && response.count !== undefined) {
-              resultArea.innerText = `Found ${response.count} occurrences of "${keyword}"`;
+              total_cnt = response.count;
+              resultArea.innerText = `${index_cnt} / ${response.count}`;
             } else {
               resultArea.innerText = "Unable to search for the keyword.";
             }
@@ -70,7 +73,7 @@ document.getElementById('searchBtn').addEventListener('click', () => {
         if (response) {
           totalHighlights = response.count;
           currentIndex = -1;
-          document.getElementById('result').innerText = `Found ${response.count} occurrence(s) of "${keyword}"`;
+          document.getElementById('result').innerText = `${index_cnt} / ${response.count}`;
         } else {
           document.getElementById('result').innerText = "Unable to search for the keyword.";
         }
@@ -85,6 +88,8 @@ document.getElementById('nextBtn').addEventListener('click', () => {
   if (totalHighlights > 0) {
     //currentIndex = (currentIndex + 1) % totalHighlights;
     currentIndex = currentIndex + 1
+    index_cnt = index_cnt + 1
+    document.getElementById('result').innerText = `${index_cnt} / ${total_cnt}`;
     navigateToHighlight(currentIndex);
   }
 });
@@ -93,6 +98,8 @@ document.getElementById('prevBtn').addEventListener('click', () => {
   if (totalHighlights > 0) {
     //currentIndex = (currentIndex - 1 + totalHighlights) % totalHighlights;
     currentIndex = currentIndex - 1;
+    index_cnt = index_cnt - 1
+    document.getElementById('result').innerText = `${index_cnt} / ${total_cnt}`;
     navigateToHighlight(currentIndex);
   }
 });

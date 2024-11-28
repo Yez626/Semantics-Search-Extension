@@ -72,7 +72,8 @@ document.getElementById('searchBtn').addEventListener('click', () => {
               const test = `"Embrace the ephemeral" has always been a slogan of rawtext.club, and fitting with that theme, we're starting over from scratch.`
               console.log(test === apiResponse)
               console.log(getStringDifference(test, apiResponse))
-              displayApiResponse(apiResponse);
+              // console.log(apiResponse)
+              // displayApiResponse(apiResponse);
               hightlightContent(apiResponse)
             } else {
               displayApiResponse("No valid response content found.");
@@ -86,7 +87,7 @@ document.getElementById('searchBtn').addEventListener('click', () => {
 
 });
 
-function hightlightContent(keyword) {
+function  hightlightContent(keyword) {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, { type: "highlightContent", keyword: keyword }, (response) => {
       if (response) {
