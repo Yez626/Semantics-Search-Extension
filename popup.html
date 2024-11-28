@@ -5,27 +5,23 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button id="getContentBtn">Print All Content</button>
-  <div id="contentArea" style="margin-top: 10px; overflow: auto; max-height: 150px; border: 1px solid #ccc;"></div>
+  <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 10px;">
+    
 
-  <div style="margin-top: 10px;">
-    <input type="text" id="keyword" placeholder="Enter keyword to search">
-    <button id="searchBtn">Search Keyword</button>
-    <div id="result" style="margin-top: 5px;"></div>
-    <div id="display" style="margin-top: 5px;"></div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <input type="text" id="keyword" placeholder="Enter keyword to search" style="height: 40px;">
+      <img id="prevBtn" src="icon\keyboard_arrow_up.png" alt="Previous" style="cursor: pointer; height: 30px; width: 30px;" onclick="prevFunction()">
+      <img id="nextBtn" src="icon\keyboard_arrow_down.png" alt="Next" style="cursor: pointer; height: 30px; width: 30px;" onclick="nextFunction()">
+      <img id="searchBtn" src="icon\search.png" alt="Search" style="cursor: pointer; height: 30px; width: 30px;" onclick="searchFunction()">
+    </div>
+
   </div>
 
-  <div style="margin-top: 10px;">
-    <label for="actionToggle">Toggle Action:</label>
-    <input type="checkbox" id="actionToggle">
-  </div>
-  
-  <div style="margin-top: 10px;">
-    <button id="prevBtn">Previous</button>
-    <button id="nextBtn">Next</button>
-  </div>
+  <div id="result" style="margin-top: 5px;"></div>
+  <div id="display" style="margin-top: 5px;"></div>
 
   <script src="popup.js"></script>
   <script type="module" src="query.js"></script>
 </body>
 </html>
+
