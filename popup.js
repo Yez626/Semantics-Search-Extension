@@ -1,17 +1,60 @@
 let currentIndex = -1;
 let totalHighlights = 0;
 
-document.getElementById('getContentBtn').addEventListener('click', () => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, { type: "getContent" }, (response) => {
-      if (response && response.content) {
-        document.getElementById('contentArea').innerText = response.content;
+// document.getElementById('getContentBtn').addEventListener('click', () => {
+//   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//     chrome.tabs.sendMessage(tabs[0].id, { type: "getContent" }, (response) => {
+//       if (response && response.content) {
+//         document.getElementById('contentArea').innerText = response.content;
+//       } else {
+//         document.getElementById('contentArea').innerText = "Unable to extract content.";
+//       }
+//     });
+//   });
+// });
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const getContentBtn = document.getElementById('getContentBtn');
+  const contentArea = document.getElementById('contentArea');
+  const searchBtn = document.getElementById('searchBtn');
+  const keywordInput = document.getElementById('keyword');
+  const resultArea = document.getElementById('result');
+  
+  if (getContentBtn) {
+    getContentBtn.addEventListener('click', () => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, { type: "getContent" }, (response) => {
+          if (response && response.content) {
+            contentArea.innerText = response.content;
+          } else {
+            contentArea.innerText = "Unable to extract content.";
+          }
+        });
+      });
+    });
+  }
+
+  if (searchBtn && keywordInput && resultArea) {
+    searchBtn.addEventListener('click', () => {
+      const keyword = keywordInput.value.trim();
+      if (keyword) {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          chrome.tabs.sendMessage(tabs[0].id, { type: "searchKeyword", keyword: keyword }, (response) => {
+            if (response && response.count !== undefined) {
+              resultArea.innerText = `Found ${response.count} occurrences of "${keyword}"`;
+            } else {
+              resultArea.innerText = "Unable to search for the keyword.";
+            }
+          });
+        });
       } else {
-        document.getElementById('contentArea').innerText = "Unable to extract content.";
+        resultArea.innerText = "Please enter a keyword to search.";
       }
     });
-  });
+  }
 });
+
 
 document.getElementById('searchBtn').addEventListener('click', () => {
   const keyword = document.getElementById('keyword').value.trim();
