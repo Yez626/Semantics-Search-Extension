@@ -58,10 +58,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+let isActionToggled = false;
+
+const actionToggle = document.getElementById("actionToggle");
+actionToggle.addEventListener('click', () => {
+  isActionToggled = !isActionToggled;
+  actionToggle.src = isActionToggled ? 'icon/manage_search_selected.png' : 'icon/manage_search_unselected.png';
+});
 
 document.getElementById('searchBtn').addEventListener('click', () => {
   const keyword = document.getElementById('keyword').value.trim();
-  const actionToggle = document.getElementById("actionToggle");
 
   if(actionToggle.checked){
     return;

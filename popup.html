@@ -11,20 +11,25 @@
   </div>
 
   <div style="margin-top: 20px; display: flex; align-items: center; gap: 10px;">
-    <input type="text" id="keyword" placeholder="Enter keyword to search" style="height: 40px; flex-grow: 1;">
+    <div style="position: relative; height: 40px;">
+      <input type="text" id="keyword" placeholder="Enter keyword to search">
+      <div id="result" style="position: absolute; top: 0; right: 10px; height: 100%; display: flex; align-items: center; font-size: 14px; color: gray;"></div>
+    </div>
+
     <img id="searchBtn" src="icon/search.png" alt="Search" style="cursor: pointer; height: 30px; width: 30px;">
 
     <img id="prevBtn" src="icon/keyboard_arrow_up.png" alt="Previous" style="cursor: pointer; height: 30px; width: 30px;">
     <img id="nextBtn" src="icon/keyboard_arrow_down.png" alt="Next" style="cursor: pointer; height: 30px; width: 30px;">
+    <img id="actionToggle" src="icon\manage_search_unselected.png" alt="Toggle Action" style="cursor: pointer; height: 30px; width: 30px;">
 
   </div>
 
-  <div id="result" style="margin-top: 10px;"></div>
+  <!-- <div id="result" style="margin-top: 10px;"></div> -->
 
-  <div style="margin-top: 20px;">
+  <!-- <div style="margin-top: 20px;">
     <label for="actionToggle">Toggle Action:</label>
     <input type="checkbox" id="actionToggle">
-  </div>
+  </div> -->
 
   <script src="popup.js"></script>
   <script type="module" src="query.js"></script>
