@@ -2,6 +2,12 @@ let currentIndex = 0;
 let totalHighlights = 0;
 
 let isActionToggled = false;
+export {navigateToHighlight, isActionToggled, keywordField, searchBtn, nextBtn, prevBtn, resultField};
+const keywordField = document.getElementById('keyword');
+const searchBtn = document.getElementById('searchBtn');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+const resultField = document.getElementById('result');
 
 const actionToggle = document.getElementById("actionToggle");
 actionToggle.addEventListener('click', () => {
@@ -9,8 +15,8 @@ actionToggle.addEventListener('click', () => {
   actionToggle.src = isActionToggled ? 'icon/manage_search_unselected.png' : 'icon/manage_search_selected.png';
 });
 
-document.getElementById('searchBtn').addEventListener('click', () => {
-  const keyword = document.getElementById('keyword').value.trim();
+searchBtn.addEventListener('click', () => {
+  const keyword = keywordField.value.trim();
   // const actionToggle = document.getElementById("actionToggle");
 
   if(!isActionToggled){
@@ -23,35 +29,35 @@ document.getElementById('searchBtn').addEventListener('click', () => {
           totalHighlights = response.count;
           currentIndex = 0;
           navigateToHighlight(currentIndex);
-          document.getElementById('result').innerText = `${currentIndex+1} / ${totalHighlights}`;
+          resultField.innerText = `${currentIndex+1} / ${totalHighlights}`;
         } else {
-          document.getElementById('result').innerText = "Unable to search for the keyword.";
+          resultField.innerText = "Unable to search for the keyword.";
         }
       });
     });
   } else {
-    document.getElementById('result').innerText = "Please enter a keyword to search.";
+    resultField.innerText = "Please enter a keyword to search.";
   }
 });
 
-document.getElementById('nextBtn').addEventListener('click', () => {
+nextBtn.addEventListener('click', () => {
   if(!isActionToggled){
     return;
   }
   if (totalHighlights > 0) {
     currentIndex = (currentIndex + 1) % totalHighlights;
-    document.getElementById('result').innerText = `${currentIndex+1} / ${totalHighlights}`;
+    resultField.innerText = `${currentIndex+1} / ${totalHighlights}`;
     navigateToHighlight(currentIndex);
   }
 });
 
-document.getElementById('prevBtn').addEventListener('click', () => {
+prevBtn.addEventListener('click', () => {
   if(!isActionToggled){
     return;
   }
   if (totalHighlights > 0) {
     currentIndex = (currentIndex - 1 + totalHighlights) % totalHighlights;
-    document.getElementById('result').innerText = `${currentIndex+1} / ${totalHighlights}`;
+    resultField.innerText = `${currentIndex+1} / ${totalHighlights}`;
     navigateToHighlight(currentIndex);
   }
 });
@@ -82,4 +88,27 @@ function highlightAndScroll(index, isActionToggled) {
   }
 }
 
-export {navigateToHighlight, isActionToggled};
+document.addEventListener('keydown', (event) => {
+  if (isActionToggled && event.key === 'Enter' && !event.shiftKey) {
+    if(totalHighlights === 0){
+      searchBtn.click();
+    }
+    else{
+      nextBtn.click();
+    }
+  }
+});
+
+keywordField.addEventListener('input', () => {
+  if(isActionToggled){
+    currentIndex=0;
+    totalHighlights=0;
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && event.shiftKey) {
+      prevBtn.click();
+      event.preventDefault();
+  }
+});

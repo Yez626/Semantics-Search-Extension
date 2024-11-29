@@ -1,14 +1,13 @@
 import { System_prompt, Model_response, Test_content} from "./prompt.js";
-import { navigateToHighlight, isActionToggled } from "./popup.js";
+import { navigateToHighlight, isActionToggled , keywordField, searchBtn, nextBtn, prevBtn, resultField } from "./popup.js";
 
 let searchHistory = [];
 let currentIndex = 0;
 
-document.getElementById('searchBtn').addEventListener('click', () => {
-    const keyword = document.getElementById('keyword').value.trim();
+searchBtn.addEventListener('click', () => {
+    const keyword = keywordField.value.trim();
 
-    searchHistory = [];
-    currentIndex = 0;
+    clearSearch();
 
     if(isActionToggled){
       return;
@@ -18,8 +17,7 @@ document.getElementById('searchBtn').addEventListener('click', () => {
 });
 
 function searchKeyword(keyword){
-    const resultElement = document.getElementById('result');
-    resultElement.innerHTML = '<img src="6d0ec30d8b8f77ab999f765edd8866e8a97d59a3.gif" alt="Loading..." id="loadingIcon"  style="width: 25px; height: 25px;">';
+    resultField.innerHTML = '<img src="6d0ec30d8b8f77ab999f765edd8866e8a97d59a3.gif" alt="Loading..." id="loadingIcon"  style="width: 25px; height: 25px;">';
 
     let pageContent = "";
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -89,10 +87,10 @@ function searchKeyword(keyword){
                     searchHistory.push(apiResponse);
                     hightlightContent(apiResponse);
                     navigateToHighlight(0);
-                    resultElement.innerText = `${currentIndex+1} / ${searchHistory.length}`;
+                    resultField.innerText = `${currentIndex+1} / ${searchHistory.length}`;
                 }
                 else{
-                    resultElement.innerText = `Failed To Find`;
+                    resultField.innerText = `Failed To Find`;
                 }
               }
             })
@@ -116,53 +114,52 @@ function  hightlightContent(keyword) {
   });
 }
 
-document.getElementById('nextBtn').addEventListener('click', () => {
-    if(isActionToggled){
+nextBtn.addEventListener('click', () => {
+    if(isActionToggled || searchHistory.length === 0){
         return;
     }
+
     currentIndex=currentIndex+1;
 
     if(currentIndex>=searchHistory.length){
-        searchKeyword(document.getElementById('keyword').value.trim());
+        searchKeyword(keywordField.value.trim());
     }
     else{
         hightlightContent(searchHistory[currentIndex]);
         navigateToHighlight(0);
-        document.getElementById('result').innerText = `${currentIndex+1} / ${searchHistory.length}`;
+        resultField.innerText = `${currentIndex+1} / ${searchHistory.length}`;
     }
 });
   
-document.getElementById('prevBtn').addEventListener('click', () => {
-    if(isActionToggled){
+prevBtn.addEventListener('click', () => {
+    if(isActionToggled || searchHistory.length === 0){
         return;
     }
     currentIndex = (currentIndex - 1 + searchHistory.length) % searchHistory.length
 
     hightlightContent(searchHistory[currentIndex]);
     navigateToHighlight(0);
-    document.getElementById('result').innerText = `${currentIndex+1} / ${searchHistory.length}`;
+    resultField.innerText = `${currentIndex+1} / ${searchHistory.length}`;
 });
 
-function getStringDifference(str1, str2) {
-  let differences = [];
-  let maxLength = Math.max(str1.length, str2.length);
+function clearSearch(){
+  searchHistory = [];
+  currentIndex = 0;
+}
 
-  for (let i = 0; i < maxLength; i++) {
-      const char1 = str1[i] || "";  // If str1 is shorter, use an empty string
-      const char2 = str2[i] || "";  // If str2 is shorter, use an empty string
-
-      if (char1 !== char2) {
-          differences.push({
-              index: i,
-              str1Char: char1,
-              str2Char: char2
-          });
-      }
+document.addEventListener('keydown', (event) => {
+  if (!isActionToggled && event.key === 'Enter' && !event.shiftKey) {
+    if(searchHistory.length === 0){
+      searchBtn.click();
+    }
+    else{
+      nextBtn.click();
+    }
   }
+});
 
-  return differences;
-}
-
-function displayApiResponse(apiResponse) {
-    document.getElementById("display").innerText = apiResponse;
-}
+keywordField.addEventListener('input', () => {
+  if(!isActionToggled){
+    clearSearch();
+  }
+});
