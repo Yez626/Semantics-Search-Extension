@@ -63,16 +63,16 @@ let isActionToggled = false;
 const actionToggle = document.getElementById("actionToggle");
 actionToggle.addEventListener('click', () => {
   isActionToggled = !isActionToggled;
-  actionToggle.src = isActionToggled ? 'icon/manage_search_selected.png' : 'icon/manage_search_unselected.png';
+  actionToggle.src = isActionToggled ? 'icon/manage_search_unselected.png' : 'icon/manage_search_selected.png';
 });
 
 document.getElementById('searchBtn').addEventListener('click', () => {
   const keyword = document.getElementById('keyword').value.trim();
+  // const actionToggle = document.getElementById("actionToggle");
 
-  if(actionToggle.checked){
+  if(isActionToggled){
     return;
   }
-  
   if (keyword) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(tabs[0].id, { type: "searchKeyword", keyword: keyword }, (response) => {
@@ -93,8 +93,8 @@ document.getElementById('searchBtn').addEventListener('click', () => {
 document.getElementById('nextBtn').addEventListener('click', () => {
   if (totalHighlights > 0) {
     //currentIndex = (currentIndex + 1) % totalHighlights;
-    currentIndex = currentIndex + 1
-    index_cnt = index_cnt + 1
+    currentIndex = (currentIndex + 1) % total_cnt
+    index_cnt = (index_cnt + 1) % total_cnt
     document.getElementById('result').innerText = `${index_cnt} / ${total_cnt}`;
     navigateToHighlight(currentIndex);
   }
@@ -103,8 +103,8 @@ document.getElementById('nextBtn').addEventListener('click', () => {
 document.getElementById('prevBtn').addEventListener('click', () => {
   if (totalHighlights > 0) {
     //currentIndex = (currentIndex - 1 + totalHighlights) % totalHighlights;
-    currentIndex = currentIndex - 1;
-    index_cnt = index_cnt - 1
+    currentIndex = (currentIndex - 1) % total_cnt;
+    index_cnt = (index_cnt - 1) % total_cnt;
     document.getElementById('result').innerText = `${index_cnt} / ${total_cnt}`;
     navigateToHighlight(currentIndex);
   }

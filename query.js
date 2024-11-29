@@ -5,7 +5,7 @@ document.getElementById('searchBtn').addEventListener('click', () => {
     const keyword = document.getElementById('keyword').value.trim();
     const actionToggle = document.getElementById("actionToggle");
 
-    if(!actionToggle.checked){
+    if(isActionToggled){
       return;
     }
     
