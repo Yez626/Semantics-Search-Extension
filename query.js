@@ -93,9 +93,13 @@ function searchKeyword(keyword){
                     resultField.innerText = `Failed To Find`;
                 }
               }
+              else{
+                resultField.innerText = `API Error`;
+              }
             })
             .catch(error => {
               console.error("There was an error with the request:", error);
+              resultField.innerText = `API Error`;
             });
         });
       });  
