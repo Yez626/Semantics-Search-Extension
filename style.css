@@ -27,3 +27,23 @@
   justify-content: center;
   margin-top: 20px;
 }
+
+
+
+
+#custom-tooltip {
+  position: absolute;
+  background-color: #717171; /* Light grey background */
+  color: #ffffff; /* Darker text color for contrast */
+  padding: 2px 4px; /* Minimal padding */
+  border-radius: 2px; /* Slightly rounded corners */
+  font-size: 8px; /* Smaller font size */
+  white-space: nowrap; /* Prevent wrapping for compact width */
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for smaller tooltip */
+  z-index: 9999;
+  opacity: 0;
+  display: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+

@@ -9,16 +9,71 @@ const nextBtn = document.getElementById('nextBtn');
 const prevBtn = document.getElementById('prevBtn');
 const resultField = document.getElementById('result');
 
+
+
+
+const tooltip = document.getElementById("custom-tooltip");
+
+
+
 const actionToggle = document.getElementById("actionToggle");
 actionToggle.addEventListener('click', () => {
   isActionToggled = !isActionToggled;
   actionToggle.src = isActionToggled ? 'icon/manage_search_unselected.png' : 'icon/manage_search_selected.png';
+  tooltip.style.opacity = "0"; // Fade-out effect
+  tooltip.style.display = "none"; // Fully hide after fading out
+});
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("keyword");
+  if (input) {
+    input.focus();
+  }
+});
+
+// Detect hover start
+actionToggle.addEventListener("mouseenter", () => {
+  const rect = actionToggle.getBoundingClientRect();
+  
+  if(isActionToggled){
+    actionToggle.src = "icon/xiba.png";
+    tooltip.innerText = "absolute search"
+  }else{
+    actionToggle.src = "icon/test.png";
+    tooltip.innerText = "semantic search"
+  }
+  // Adjust the tooltip's position to be more left and up
+  tooltip.style.left = `${rect.left - 55}px`; // Move 20px further left
+  tooltip.style.top = `${rect.top - tooltip.offsetHeight - 10}px`; // Move 20px further up
+
+  tooltip.style.display = "block";
+  tooltip.style.opacity = "1";
+
+});
+
+
+
+// Detect hover end
+actionToggle.addEventListener("mouseleave", () => {
+  if(isActionToggled){
+    actionToggle.src = "icon/manage_search_unselected.png";
+    
+  }else{
+    actionToggle.src = "icon/origin.png";
+
+  }
+  tooltip.style.opacity = "0"; // Fade-out effect
+  tooltip.style.display = "none"; // Fully hide after fading out
+
+
 });
 
 searchBtn.addEventListener('click', () => {
   const keyword = keywordField.value.trim();
   // const actionToggle = document.getElementById("actionToggle");
-
+  console.log(keyword);
   if(!isActionToggled){
     return;
   }
