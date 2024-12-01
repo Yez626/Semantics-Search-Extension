@@ -38,10 +38,10 @@ actionToggle.addEventListener("mouseenter", () => {
   const rect = actionToggle.getBoundingClientRect();
   
   if(isActionToggled){
-    actionToggle.src = "icon/xiba.png";
+    actionToggle.src = "icon/new/manage_search-1.png";
     tooltip.innerText = "absolute search"
   }else{
-    actionToggle.src = "icon/test.png";
+    actionToggle.src = "icon/new/manage_search.png";
     tooltip.innerText = "semantic search"
   }
   // Adjust the tooltip's position to be more left and up
@@ -58,10 +58,10 @@ actionToggle.addEventListener("mouseenter", () => {
 // Detect hover end
 actionToggle.addEventListener("mouseleave", () => {
   if(isActionToggled){
-    actionToggle.src = "icon/manage_search_unselected.png";
+    actionToggle.src = "icon/new/manage_search-3.png";
     
   }else{
-    actionToggle.src = "icon/origin.png";
+    actionToggle.src = "icon/new/manage_search-2.png";
 
   }
   tooltip.style.opacity = "0"; // Fade-out effect
