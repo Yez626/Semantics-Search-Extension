@@ -19,7 +19,7 @@ const tooltip = document.getElementById("custom-tooltip");
 const actionToggle = document.getElementById("actionToggle");
 actionToggle.addEventListener('click', () => {
   isActionToggled = !isActionToggled;
-  actionToggle.src = isActionToggled ? 'icon/manage_search_unselected.png' : 'icon/manage_search_selected.png';
+  actionToggle.src = isActionToggled ? 'icon/new/manage_search-3.png' : 'icon/new/manage_search-2.png';
   tooltip.style.opacity = "0"; // Fade-out effect
   tooltip.style.display = "none"; // Fully hide after fading out
 });
