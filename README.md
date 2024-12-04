@@ -53,7 +53,7 @@ Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
    ```bash
    git clone https://github.com/Yez626/google_ext_link.git
    cd google_ext_link
-2. install the following Dependencies
+2. install the following Dependencies:
+   ```bash
    npm install mark
    npx webpack
-   
