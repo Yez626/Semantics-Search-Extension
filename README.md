@@ -2,7 +2,7 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Visit-brightgreen.svg)](https://chromewebstore.google.com/detail/semantic-search-with-genm/hnjmloccdlhfhecmkemojkpmjhefpeee?hl=en-US&utm_source=ext_sidebar)
-[![Demo Video](https://img.shields.io/badge/Demo-Video-red.svg)](https://www.youtube.com/watch?v=your-video-id)
+[![Demo Video](https://img.shields.io/badge/Demo-Video-red.svg)](https://youtu.be/-k51C5WMjT4)
 
 A cutting-edge Chrome extension leveraging Google's Gemini model to perform semantic keyword searches on websites. Users can search for keywords, highlight occurrences, and navigate through results seamlessly.
 
