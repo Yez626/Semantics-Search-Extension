@@ -1,4 +1,4 @@
-# Chrome Extension: Semantics Search With Google Gemini
+# Chrome Extension: Semantics Search With Gemini
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Visit-brightgreen.svg)](https://chromewebstore.google.com/detail/semantic-search-with-genm/hnjmloccdlhfhecmkemojkpmjhefpeee?hl=en-US&utm_source=ext_sidebar)
