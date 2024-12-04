@@ -90,7 +90,7 @@ function searchKeyword(keyword){
                     resultField.innerText = `${currentIndex+1} / ${searchHistory.length}`;
                 }
                 else{
-                    resultField.innerText = `Failed To Find`;
+                    resultField.innerText = `No Such Info`;
                 }
               }
               else{

@@ -1,7 +1,7 @@
 export const System_prompt = `
 The user will first give you a long context and then a query. Your task is to identify a 
 sentence or a paragraph in the context that is most related to user's query. 
-Find the sentence or paragraph and output the original text.
+Find the sentence or paragraph and output the original text. Please return only one sentence.
 `;
 export const Model_response = "Thanks for providing the context, what's your query?";
 
